@@ -7,6 +7,7 @@ a {
     text-decoration: none;
     color: black;
 }
+/* body */
 body {
     font-family: "DM Sans", sans-serif;
     margin: 0;
@@ -19,18 +20,63 @@ body {
     padding: 0px 60px;
 
 }
+/* header */
 .search-bar{
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 50%;
     height: 100px;
+    margin-bottom: 20px;
 }
 .search-bar input {
     width: 400px;
     height: 50px;
 }
+.icon {
+    font-size: 30px;
+}
+/* section filter */
+.container-recipes-filter{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.container-filter-ingredients{
+    display: flex;
+    flex-direction: column;
+}
+.tag-option{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    background-color: yellow;
+    border-radius: 25px;
+
+}
+.total-recipes {
+    font-weight: 600;
+    font-size: 20px;
+}
+.search-bar[data-error]::after {/* data error message */
+    position: absolute;
+    bottom: -10px;
+    content: attr(data-error);
+    color: rgb(68, 129, 203);
+    display: block;
+    font-size: 13px;
+    opacity: 0;
+    transition: 0.3s;
+    font-weight: 600;
+}
+
+.search-bar[data-error-visible="true"]::after {
+    opacity: 1;
+}
+/* section recipes */
 .container-recipes{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;

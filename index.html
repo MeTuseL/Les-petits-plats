@@ -1,37 +1,48 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-    <link href="./css/style.css" rel="stylesheet" type="text/css" />
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Les petits plats</title>
-    <!-- kit icons frontawesome  -->
-    <script src="https://kit.fontawesome.com/f4ea6028b2.js" crossorigin="anonymous" defer></script>
+  <link href="./css/style.css" rel="stylesheet" type="text/css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Les petits plats</title>
+  <!-- kit icons frontawesome  -->
+  <script src="https://kit.fontawesome.com/f4ea6028b2.js" crossorigin="anonymous" defer></script>
 </head>
+
 <body>
-    <div class="container-body">
+  <div class="container-body">
     <header id="header">
-            <div class="search-bar">
-                <input type="search" class="control-text" placeholder="Rechercher une recette, un ingrédient, ..." aria-label="Search" aria-describedby="search-addon" />
-                <span class="icon" id="icon-loop">
-                  <i class="fas fa-search"></i>
-                </span>
-              </div>
+      <div class="search-bar">
+        <input type="search" class="control-text" placeholder="Rechercher une recette, un ingrédient, ..."
+          aria-label="Search" aria-describedby="search-addon" />
+        <span class="icon" id="icon-loop">
+          <i class="fas fa-search"></i>
+        </span>
+      </div>
     </header>
     <main id="main">
-       <section id="section-filter">
+      <section id="section-filter">
+        <div class="container-recipes-filter">
+          <div class="container-filter-ingredients">
+            <select name="ingredients">
+              <option value="ingredients">Ingrédients</option>
+            </select>
+            <div class="container-tag-ingredient">
+            </div>
+          </div>
 
-       </section>
-       <section id="section">
-        
-        <div class="container-recipes">
         </div>
-       </section>
+      </section>
+      <section id="section">
+        <div class="container-recipes"></div>
+      </section>
     </main>
-</div>
-<script src="./data/recipes.js"></script>
-<script src="./scripts/factories/recipe.js"></script>
-<script src="./scripts/pages/index.js"></script>
-    
+  </div>
+  <script src="./data/recipes.js"></script>
+  <script src="./scripts/factories/recipe.js"></script>
+  <script src="./scripts/pages/index.js"></script>
+  <script src="./scripts/utils/sortRecipes.js"></script>
 </body>
+
 </html>
