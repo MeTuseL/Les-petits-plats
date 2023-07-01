@@ -99,7 +99,7 @@ const recipes = [
                 "quantity": 1
             },
             {
-                "ingredient": "Huile d'olive",
+                "ingredient": "Huile d'olives",
                 "quantity": 1,
                "unit": "cuillères à soupe"
             }
@@ -172,7 +172,7 @@ const recipes = [
                "unit": "cuillères à soupe"
            },
            {
-               "ingredient": "gruyère râpé",
+               "ingredient": "Gruyère râpé",
                "quantity": 100,
                "unit": "grammes"
            },
@@ -291,7 +291,7 @@ const recipes = [
                "unit": "grammes"
            },
            {
-                "ingredient": "farine",
+                "ingredient": "Farine",
                 "quantity": 90,
                 "unit": "grammes"
            }
@@ -324,7 +324,7 @@ const recipes = [
                 "ingredient": "Vinaigre Balsamic"
             },
             {
-                "ingredient": "Huile d'olive"
+                "ingredient": "Huile d'olives"
             }, 
             {
                 "ingredient": "Basilic"    
@@ -392,7 +392,7 @@ const recipes = [
                 "unit": "tranches"
             }, 
             {
-                "ingredient": "Pommes",
+                "ingredient": "Pomme",
                 "quantity": 1
             },
             {
@@ -421,7 +421,7 @@ const recipes = [
                 "unit": "grammes"
             },
             {
-                "ingredient": "Pommes",
+                "ingredient": "Pomme",
                 "quantity": 8
             },
             {
@@ -457,7 +457,7 @@ const recipes = [
                 "unit": "grammes"
             },
             {
-                "ingredient": "Échalote",
+                "ingredient": "Echalote",
                 "quantity": 2
 
             },
@@ -467,7 +467,7 @@ const recipes = [
                 "unit":"cuillère à soupe"
             },
             {
-                "ingredient": "huile d'olive",
+                "ingredient": "Huile d'olives",
                 "quantity": 2,
                 "unit": "cuillère à soupe"
             }
@@ -585,7 +585,7 @@ const recipes = [
                 "unit":"tiges"
             },
             {
-                "ingredient": "huile d'olives",
+                "ingredient": "Huile d'olives",
                 "quantity": 2,
                 "unit": "cuillère à soupe"
             }
@@ -715,7 +715,7 @@ const recipes = [
                 "unit":"grammes"
             },
             {
-                "ingredient": "huile d'olive",
+                "ingredient": "Huile d'olives",
                 "quantity": 1,
                 "unit": "cuillères à soupe"
             }
@@ -828,7 +828,7 @@ const recipes = [
                 "quantity": 3
             },
             {
-                "ingredient": "Crème Fraîche",
+                "ingredient": "Crème fraîche",
                 "quantity": 20,
                 "unit": "cl"
             },
@@ -1043,7 +1043,7 @@ const recipes = [
                 "quantity": 2
             },
             {
-                "ingredient": "Huile d'olive"
+                "ingredient": "Huile d'olives"
             },
             {
                 "ingredient": "Paprika"
@@ -1210,7 +1210,7 @@ const recipes = [
                 "unit": "cl"
             },
             {
-                "ingredient": "Huile d'olive"
+                "ingredient": "Huile d'olives"
             },
             {
                 "ingredient": "Orange",
@@ -1327,7 +1327,7 @@ const recipes = [
                 "quantity": 1
             },
             {
-                "ingredient": "Coulis de tomates",
+                "ingredient": "Coulis de tomate",
                 "quantity": 20,
                 "unit": "cl"
             },
@@ -1553,7 +1553,7 @@ const recipes = [
                 "unit":"grammes"
             },
             {
-                "ingredient": "farine",
+                "ingredient": "Farine",
                 "quantity": 40,
                 "unit": "grammes"
             }
@@ -1657,7 +1657,7 @@ const recipes = [
                 "unit": "grammes"
             },
             {
-                "ingredient": "Crème Fraîche",
+                "ingredient": "Crème fraîche",
                 "quantity": 20,
                 "unit":"cl"
             }
@@ -1710,11 +1710,11 @@ const recipes = [
         "servings": 4,
         "ingredients": [
             {
-                "ingredient": "Bananes",
+                "ingredient": "Banane",
                 "quantity": 2
             },
             {
-                "ingredient": "Kiwis",
+                "ingredient": "Kiwi",
                 "quantity": 3
             },
             {
