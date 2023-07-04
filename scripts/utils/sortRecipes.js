@@ -39,12 +39,13 @@ let tagIngrUser = new Array();
 
 //EVENTS
 controlText.addEventListener("input", () => {
-    displayRecipes(resultSearchUser());
+    displayRecipes();
 });
 selectIngredients.addEventListener("change", (event) => {
     valueOption = event.target.value;
     createTagIngredients();
-    displayRecipes(resultSearchUser());//display recipe by research of user
+    tagIngrUser.push(resultSearchUser().testAddTag);//add tag in array 
+    displayRecipes();//display recipe by research of user
 });
 
 //FUNCTIONS
@@ -52,7 +53,7 @@ function controlSearchBar() {//control value of search bar
 
     if (controlText.value == "") {
         searchBar.dataset.errorVisible = "true";
-        searchBar.dataset.error = "Veuillez saisir une recette, un ingrédient, ...";
+        searchBar.dataset.error = "";
         resultEvent = "false";
     }
     else if (controlText.value.length < 3) {
@@ -162,7 +163,7 @@ function createTagIngredients() {
             icon_Close.parentElement.remove();//remove tag 
             let valueOptionOfIcon = removeAccentText(icon_Close.parentElement.querySelector('.tag-option span').textContent);
             tagIngrUser = tagIngrUser.filter((tag) => tag !== valueOptionOfIcon);//remove value option of tag array
-            displayRecipes(resultGlobalSearch);//on remove tag, display current recipe of global search 
+            displayRecipes();//on remove tag, display current recipe of global search 
         });
     }
 }
@@ -204,15 +205,21 @@ function filterByTagIntegrient() {
 }
 function resultSearchUser() {
     //result search bar
+    let filterResultSearchBar;
     if (filterBySearchBar() !== undefined) {
-        resultSearchBar.push(filterBySearchBar().resultSearch);
-        searchBarUser.push(filterBySearchBar().textSearchUser);
+        filterResultSearchBar = filterBySearchBar().resultSearch;
+        // resultSearchBar.push(filterResultSearchBar);
+        //searchBarUser.push(filterBySearchBar().textSearchUser);
     }
 
     //result tag ingredient
+    let filterResultTagIngr;
+    let testAddTag;
     if (filterByTagIntegrient() !== undefined) {
-        resultTagIngredient.push(filterByTagIntegrient().resultSearch);
-        tagIngrUser.push(filterByTagIntegrient().tag);
+        filterResultTagIngr = filterByTagIntegrient().resultSearch;
+        // resultTagIngredient.push(filterResultTagIngr);
+        testAddTag = filterByTagIntegrient().tag;
+        // tagIngrUser.push(filterByTagIntegrient().tag);
     }
 
     //result tag appliance
@@ -220,35 +227,39 @@ function resultSearchUser() {
 
 
     //concat all result array
-    resultGlobalSearch = resultGlobalSearch.concat(resultSearchBar, resultTagIngredient);
+    //resultGlobalSearch = resultGlobalSearch.concat(resultSearchBar, resultTagIngredient);
 
-    return resultGlobalSearch;
+    return { filterResultSearchBar, filterResultTagIngr, testAddTag };
 
 }
-function displayRecipes(resultGlobal) {//display result search 
+function displayRecipes() {//display result search
 
-    let uniqueResultGlobalSearch = [...new Set(resultGlobal)];// remove all duplicate of array  
+    // let uniqueResultGlobalSearch = [...new Set(resultGlobal)];// remove all duplicate of array  
     let newResultGlobalSearch = new Array();
+    let newResultSearchBar = [...new Set(resultSearchUser().filterResultSearchBar)];
+    let newResultTagIngr = [...new Set(resultSearchUser().filterResultTagIngr)];
+    let countRecipes = new Number();
+    let t = new Array();
+
 
     //match global result with search of user  
-    for (let listResult of uniqueResultGlobalSearch) {
-        for (let result of listResult) {
-            let arrResultIngr = result.querySelectorAll('.content-recipe .ingredients-recipe h4');
-            let countTag = 0;
+    for (let result of newResultTagIngr) {
+        let arrResultIngr = result.querySelectorAll('.content-recipe .ingredients-recipe h4');
+        let countTag = 0;
 
-            for (let ingredient of arrResultIngr) {
-                let ingr = removeAccentText(ingredient.textContent);
-                for (let tag of tagIngrUser) {
-                    //  let regex = new RegExp(tag);
-                     
-                    if (ingr === tag) {
-                        countTag += 1;
-                    }
-                    //  else if (ingr.match(regex)) {
-                    //      countTag += 1;
-                    //  }
+        for (let ingredient of arrResultIngr) {
+            let ingr = removeAccentText(ingredient.textContent);
+            for (let tag of tagIngrUser) {
+                //  let regex = new RegExp(tag);
+
+                if (ingr === tag) {
+                    countTag += 1;
                 }
+                //  else if (ingr.match(regex)) {
+                //      countTag += 1;
+                //  }
             }
+
             // console.log(countTag)
             if (countTag == tagIngrUser.length && tagIngrUser.length !== 0) {
                 // console.log(result.querySelector('.content-recipe h2'));
@@ -256,32 +267,70 @@ function displayRecipes(resultGlobal) {//display result search
             }
         }
     }
+
     //display recipes
-    if (tagIngrUser.length !== 0 || controlText.value !== "") {
+    if (controlText.value !== "" && tagIngrUser.length == 0) {// case user use the filter tag 
 
         for (let recipe of listCardRecipes) {
             recipe.style.display = "none";
 
+            for (let result of newResultSearchBar) {
+
+                    if (recipe === result) {
+                        recipe.style.display = "block";
+                    }
+                
+            }
+        }
+        // calculate total of result recipe
+        countRecipes = [...new Set(newResultSearchBar)].length;
+    }
+    else if (tagIngrUser.length !== 0 && controlText.value == "") {// case user use the search bar 
+
+        
+        for (let recipe of listCardRecipes) {
+            recipe.style.display = "none";
+
             for (let result of newResultGlobalSearch) {
-                if (recipe == result) {
+                if (recipe === result) {
                     recipe.style.display = "block";
                 }
             }
         }
+        // calculate total of result recipe
+        countRecipes = [...new Set(newResultGlobalSearch)].length;
+    }
+    else if (tagIngrUser.length !== 0 && controlText.value !== "") {// case user use the search bar and filter tag
+
+        for (let result1 of newResultSearchBar) {
+            for (let result2 of newResultGlobalSearch) {
+
+                if (result1 === result2) {
+                    t.push(result1);
+                }
+            }
+        }
+
+        for (let recipe of listCardRecipes) {
+            recipe.style.display = "none";
+
+            for (let gg of t) {
+                if (recipe === gg) {
+                    recipe.style.display = "block";
+                }
+            }
+        }
+        // calculate total of result recipe
+        countRecipes = [...new Set(t)].length;
     }
     else {
         for (let recipe of listCardRecipes) {
             recipe.style.display = "block";
         }
+        // calculate total of result recipe
+        countRecipes = listCardRecipes.length;
     }
-    
-    // calculate total of result recipe
-    let countRecipes = newResultGlobalSearch.length;
+    //total recipes
     totRecipes.textContent = countRecipes + " recettes";
-    // if (countRecipes == 0) {
-    //     console.log(countRecipes)
 
-    //     searchBar.dataset.errorVisible = "true";
-    //     searchBar.dataset.error = "« Aucune recette ne contient ‘" + controlText.value + "’ vous pouvez chercher «tarte aux pommes », « poisson », etc.";
-    // }
 }
