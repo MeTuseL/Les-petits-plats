@@ -86,9 +86,6 @@ async function displayData(dataRecipes) {// display data recipe
         optionUst.textContent = uniqueOp;
         selectUstensils.appendChild(optionUst);
     }
-
-
-
 }
 async function init() { //get data from recipes
     displayData(recipes);

@@ -10,6 +10,7 @@ function recipeFactory(data) {
         
         const divRecipe = document.createElement('div');
         divRecipe.className = "card-recipe";
+        divRecipe.id = id;
         //image
         const imgRecipe = document.createElement('img');
         imgRecipe.className = "image-recipe";

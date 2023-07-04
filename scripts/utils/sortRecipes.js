@@ -25,6 +25,11 @@ const noAccent = ['A', 'a', 'E', 'e', 'I', 'i', 'O', 'o', 'U', 'u', 'N', 'n', 'C
 
 const tagIngredient = document.querySelector(".container-tag-ingredient");
 const selectIngredients = document.querySelector('select[name="ingredients"]');
+const tagAppliance = document.querySelector(".container-tag-appliance");
+const selectAppliance = document.querySelector('select[name="appliance"]');
+const tagUstensils = document.querySelector(".container-tag-ustensils");
+const selectUstensils = document.querySelector('select[name="ustensils"]');
+
 let valueOption;
 
 let resultSearchBar = new Array();
@@ -34,7 +39,7 @@ let resultTagUstensils = new Array();
 let resultGlobalSearch = new Array();// all result of research are contains in this array 
 
 let searchBarUser = new Array();
-let tagIngrUser = new Array();
+let arrTag = new Array();
 
 
 //EVENTS
@@ -43,8 +48,20 @@ controlText.addEventListener("input", () => {
 });
 selectIngredients.addEventListener("change", (event) => {
     valueOption = event.target.value;
-    createTagIngredients();
-    tagIngrUser.push(resultSearchUser().testAddTag);//add tag in array 
+    createTag(tagIngredient, valueOption);
+    arrTag.push(valueOption);//add tag in array 
+    displayRecipes();//display recipe by research of user
+});
+selectAppliance.addEventListener("change", (event) => {
+    valueOption = event.target.value;
+    createTag(tagAppliance, valueOption);
+    arrTag.push(valueOption);//add tag in array 
+    displayRecipes();//display recipe by research of user
+});
+selectUstensils.addEventListener("change", (event) => {
+    valueOption = event.target.value;
+    createTag(tagUstensils, valueOption);
+    arrTag.push(valueOption);//add tag in array 
     displayRecipes();//display recipe by research of user
 });
 
@@ -146,61 +163,77 @@ function filterBySearchBar() { //return the result of search bar
         controlSearchBar();
     }
 }
-function createTagIngredients() {
-    if (valueOption !== undefined) {
+function createTag(tag, value) {
+    if (value !== undefined) {
         //create tag ingredient
         const divTagOption = document.createElement('div');
         divTagOption.className = "tag-option";
         const icon_Close = document.createElement('i');
         icon_Close.className = "fa-solid fa-xmark";
         const tag_Option = document.createElement('span');
-        tag_Option.textContent = valueOption;
-        tagIngredient.appendChild(divTagOption);
+        tag_Option.textContent = value;
+        tag.appendChild(divTagOption);
         divTagOption.appendChild(tag_Option);
         divTagOption.appendChild(icon_Close);
 
         icon_Close.addEventListener("click", () => {
             icon_Close.parentElement.remove();//remove tag 
             let valueOptionOfIcon = removeAccentText(icon_Close.parentElement.querySelector('.tag-option span').textContent);
-            tagIngrUser = tagIngrUser.filter((tag) => tag !== valueOptionOfIcon);//remove value option of tag array
+            arrTag = arrTag.filter((tag) => removeAccentText(tag) !== valueOptionOfIcon);//remove value option of tag array
             displayRecipes();//on remove tag, display current recipe of global search 
         });
     }
 }
-function filterByTagIntegrient() {
-
-    if (valueOption !== undefined) {
-        let tagIngredient = removeAccentText(valueOption);// remove accent and lowercase 
-        // let arrTagIngredient = tagIngredient.split(' ');
-        // let arrfirstTagIngredient = arrTagIngredient[0];
-        let tag;
-        // let regexTagSearch;//regex
+function filterByTag() {
+    if (arrTag !== undefined) {
         let resultSearch = new Array();
 
-        //match ingredients recipe with search of user
-        for (let indexRecipe = 0; indexRecipe < recipes.length; indexRecipe++) {
+        for (let tag of arrTag) {
 
-            //match ingredient recipe 
-            const listIngredientsRecipe = recipes[indexRecipe]["ingredients"];
-            for (let ingredient of listIngredientsRecipe) {
-                let ingrRecipe = removeAccentText(ingredient["ingredient"]);
-                // regexTagSearch = new RegExp(arrfirstTagIngredient);
+            let valueTag = removeAccentText(tag);// remove accent and lowercase 
+            // let arrTagIngredient = tagIngredient.split(' ');
+            // let arrfirstTagIngredient = arrTagIngredient[0];
+            // let regexTagSearch;//regex
 
-                if (ingrRecipe === tagIngredient) {
-                    resultSearch.push(listCardRecipes[indexRecipe]);
-                    tag = tagIngredient;
+            //match ingredients recipe with search of user
+            for (let indexRecipe = 0; indexRecipe < recipes.length; indexRecipe++) {
+
+                //match ingredient recipe 
+                const listIngredientsRecipe = recipes[indexRecipe]["ingredients"];
+                for (let ingredient of listIngredientsRecipe) {
+                    let ingrRecipe = removeAccentText(ingredient["ingredient"]);
+                    // regexTagSearch = new RegExp(arrfirstTagIngredient);
+
+                    if (ingrRecipe === valueTag) {
+                        resultSearch.push(listCardRecipes[indexRecipe]);
+                    }
+                    // else if (ingrRecipe.match(regexTagSearch) !== null) {
+                    //     // check if array of match is not null 
+                    //     resultSearch.push(listCardRecipes[indexRecipe]);
+                    //     tag = tagIngredient;
+                    // }
                 }
-                // else if (ingrRecipe.match(regexTagSearch) !== null) {
-                //     // check if array of match is not null 
-                //     resultSearch.push(listCardRecipes[indexRecipe]);
-                //     tag = tagIngredient;
-                // }
+
+                //match appliance recipe
+                const applianceRecipe = removeAccentText(recipes[indexRecipe].appliance);
+                if (applianceRecipe === valueTag) {
+                    resultSearch.push(listCardRecipes[indexRecipe]);
+                }
+
+                //match ustensils recipe 
+                const listUstensilsRecipe = recipes[indexRecipe].ustensils;
+                for (ustensil of listUstensilsRecipe) {
+                    let ustensilRecipe = removeAccentText(ustensil);
+
+                    if (ustensilRecipe === valueTag) {
+                        resultSearch.push(listCardRecipes[indexRecipe]);
+                    }
+                }
             }
         }
-        return { resultSearch, tag };
-
-
+        return { resultSearch };
     }
+
 
 }
 function resultSearchUser() {
@@ -213,13 +246,13 @@ function resultSearchUser() {
     }
 
     //result tag ingredient
-    let filterResultTagIngr;
+    let filterResultTag;
     let testAddTag;
-    if (filterByTagIntegrient() !== undefined) {
-        filterResultTagIngr = filterByTagIntegrient().resultSearch;
+    if (filterByTag() !== undefined) {
+        filterResultTag = filterByTag().resultSearch;
         // resultTagIngredient.push(filterResultTagIngr);
-        testAddTag = filterByTagIntegrient().tag;
-        // tagIngrUser.push(filterByTagIntegrient().tag);
+        // testAddTag = filterByTag(valueOption).valueTag;
+        // arrTag.push(filterByTagIntegrient().tag);
     }
 
     //result tag appliance
@@ -229,7 +262,7 @@ function resultSearchUser() {
     //concat all result array
     //resultGlobalSearch = resultGlobalSearch.concat(resultSearchBar, resultTagIngredient);
 
-    return { filterResultSearchBar, filterResultTagIngr, testAddTag };
+    return { filterResultSearchBar, filterResultTag };
 
 }
 function displayRecipes() {//display result search
@@ -237,57 +270,98 @@ function displayRecipes() {//display result search
     // let uniqueResultGlobalSearch = [...new Set(resultGlobal)];// remove all duplicate of array  
     let newResultGlobalSearch = new Array();
     let newResultSearchBar = [...new Set(resultSearchUser().filterResultSearchBar)];
-    let newResultTagIngr = [...new Set(resultSearchUser().filterResultTagIngr)];
+    let newResultTag = [...new Set(resultSearchUser().filterResultTag)];
     let countRecipes = new Number();
     let t = new Array();
 
-
     //match global result with search of user  
-    for (let result of newResultTagIngr) {
-        let arrResultIngr = result.querySelectorAll('.content-recipe .ingredients-recipe h4');
-        let countTag = 0;
+    for (let indexRecipe = 0; indexRecipe < recipes.length; indexRecipe++) {
 
-        for (let ingredient of arrResultIngr) {
-            let ingr = removeAccentText(ingredient.textContent);
-            for (let tag of tagIngrUser) {
-                //  let regex = new RegExp(tag);
+        let convertIdRecipeToStr = recipes[indexRecipe].id + "";
 
-                if (ingr === tag) {
-                    countTag += 1;
+        for (let result of newResultTag) {
+            if (convertIdRecipeToStr === result.id) {
+
+                let countTag = 0;
+
+                //match ingredient recipe
+                const listIngredientsRecipe = recipes[indexRecipe]["ingredients"];
+                const applianceRecipe = removeAccentText(recipes[indexRecipe].appliance);
+                const listUstensilsRecipe = recipes[indexRecipe].ustensils;
+
+
+                // let arrResultIngr = result.querySelectorAll('.content-recipe .ingredients-recipe h4');
+
+                // for (let ingredient of arrResultIngr) {
+                //     let ingr = removeAccentText(ingredient.textContent);
+                for (let tag of arrTag) {
+
+                    //match ingredient recipe
+                    for (let ingredient of listIngredientsRecipe) {
+                        let ingr = removeAccentText(ingredient["ingredient"]);
+                        //  let regex = new RegExp(tag);
+
+                        if (ingr === removeAccentText(tag)) {
+                            countTag += 1;
+                        }
+                        //  else if (ingr.match(regex)) {
+                        //      countTag += 1;
+                        //  }
+                    }
+
+                    //match appliance recipe
+                    if (applianceRecipe === removeAccentText(tag)) {
+                        countTag += 1;
+                    }
+                    
+                    //match ustensils recipe
+                    for (ustensil of listUstensilsRecipe) {
+                        let ustensilRecipe = removeAccentText(ustensil);
+
+                        if (ustensilRecipe === removeAccentText(tag)) {
+                            countTag += 1;
+                        }
+                    }
                 }
-                //  else if (ingr.match(regex)) {
-                //      countTag += 1;
-                //  }
-            }
 
-            // console.log(countTag)
-            if (countTag == tagIngrUser.length && tagIngrUser.length !== 0) {
-                // console.log(result.querySelector('.content-recipe h2'));
-                newResultGlobalSearch.push(result);
+                // const applianceRecipe = removeAccentText(recipes[indexRecipe].appliance);
+
+                // for (let tag of arrTag) {
+
+                //     if (applianceRecipe === removeAccentText(tag)) {
+                //         countTag += 1;
+                //     }
+                // }
+
+
+                // console.log(countTag)
+                if (countTag == arrTag.length && arrTag.length !== 0) {
+                    // console.log(result.querySelector('.content-recipe h2'));
+                    newResultGlobalSearch.push(result);
+                }
             }
         }
     }
-
     //display recipes
-    if (controlText.value !== "" && tagIngrUser.length == 0) {// case user use the filter tag 
+    if (controlText.value !== "" && arrTag.length == 0) {// case user use the filter tag 
 
         for (let recipe of listCardRecipes) {
             recipe.style.display = "none";
 
             for (let result of newResultSearchBar) {
 
-                    if (recipe === result) {
-                        recipe.style.display = "block";
-                    }
-                
+                if (recipe === result) {
+                    recipe.style.display = "block";
+                }
+
             }
         }
         // calculate total of result recipe
         countRecipes = [...new Set(newResultSearchBar)].length;
     }
-    else if (tagIngrUser.length !== 0 && controlText.value == "") {// case user use the search bar 
+    else if (arrTag.length !== 0 && controlText.value == "") {// case user use the search bar 
 
-        
+
         for (let recipe of listCardRecipes) {
             recipe.style.display = "none";
 
@@ -300,7 +374,7 @@ function displayRecipes() {//display result search
         // calculate total of result recipe
         countRecipes = [...new Set(newResultGlobalSearch)].length;
     }
-    else if (tagIngrUser.length !== 0 && controlText.value !== "") {// case user use the search bar and filter tag
+    else if (arrTag.length !== 0 && controlText.value !== "") {// case user use the search bar and filter tag
 
         for (let result1 of newResultSearchBar) {
             for (let result2 of newResultGlobalSearch) {
