@@ -61,7 +61,7 @@ const recipes = [
                 "quantity" : 5
             },
             {
-                "ingredient" : "Lait de Coco",
+                "ingredient" : "Lait de coco",
                 "quantity" : 100,
                 "unit" : "ml"
             }
@@ -211,7 +211,7 @@ const recipes = [
                 "unit": "cl"
             },
             {
-                "ingredient": "Sucre en Poudre",
+                "ingredient": "Sucre en poudre",
                 "quantity": 100,
                 "unit":"grammes"
             },
@@ -286,7 +286,7 @@ const recipes = [
                 "quantity": 2
            },
            {
-               "ingredient": "Sucre en Poudre",
+               "ingredient": "Sucre en poudre",
                "quantity": "110",
                "unit": "grammes"
            },

@@ -7,29 +7,17 @@ async function displayData(dataRecipes) {// display data recipe
         recipesSection.appendChild(recipeCardDOM);
     });
 
-    //display of the first 10 recipe 
-    // const listCardRecipes = document.querySelectorAll(".card-recipe");
-    // const arrListCardRecipes = Array.from(listCardRecipes);
-
-    // for (let recipe of arrListCardRecipes) {
-    //     let indexRecipe = arrListCardRecipes.indexOf(recipe);
-    //     if (indexRecipe < 10) {
-    //         recipe.style.display = "block";
-    //     }
-    //     else {
-    //         recipe.style.display = "none";
-    //     }
-    // }
     //count total recipes
-    const recipesFilter = document.querySelector(".container-recipes-filter");
-    const listRecipes = document.querySelector(".container-recipes");
-    let countRecipes = listRecipes.childElementCount;
-    const totalRecipes = document.createElement("div");
-
-    totalRecipes.className = "total-recipes";
-    totalRecipes.textContent = countRecipes + " recettes";
-
-    recipesFilter.appendChild(totalRecipes);
+    const listCardRecipes = document.querySelectorAll(".recipe-card");
+    const totRecipes = document.querySelector(".count-recipes");
+    let countRecipes = listCardRecipes.length;
+    totRecipes.textContent = countRecipes + " recettes";
+    //fade in recipe 
+    let baseDelay = 0.4;
+    for(let i = 0; i < countRecipes; i++) {
+        listCardRecipes[i].style.setProperty("--fadeinDelayRecipe",baseDelay + ((i+1) / 5)+"s");
+        listCardRecipes[i].classList.add("fade-in-recipe"); //trigger css animation
+    }
 
     //tag ingredients 
     const selectIngredients = document.querySelector('select[name="ingredients"]');

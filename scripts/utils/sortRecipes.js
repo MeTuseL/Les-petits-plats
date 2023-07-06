@@ -1,13 +1,13 @@
 //DOM
 const searchBar = document.querySelector(".search-bar");
 const controlText = document.querySelector(".control-text");
-const iconSearch = document.getElementById("icon-loop");
-const listTitleRecipes = document.querySelectorAll(".card-recipe h2");
-const arrListTitleRecipes = Array.from(listTitleRecipes);
-const listCardRecipes = document.querySelectorAll(".card-recipe");
-const listIngrRecipes = document.querySelectorAll(".ingredient-recipe h4");
-const totRecipes = document.querySelector(".total-recipes");
-const listRecipes = document.querySelector(".container-recipes");
+// const iconSearch = document.getElementById("icon-loop");
+const listTitleRecipes = document.querySelectorAll(".recipe-card__content h2");
+// const arrListTitleRecipes = Array.from(listTitleRecipes);
+const listCardRecipes = document.querySelectorAll(".recipe-card");
+const listIngrRecipes = document.querySelectorAll(".recipe-card__content__ingredients__ingredient h4");
+const totRecipes = document.querySelector(".count-recipes");
+// const listRecipes = document.querySelector(".container-recipes");
 let resultEvent;
 let searchRecipe;
 let indexRecipe;
@@ -23,11 +23,11 @@ const accent = [
 ];
 const noAccent = ['A', 'a', 'E', 'e', 'I', 'i', 'O', 'o', 'U', 'u', 'N', 'n', 'C', 'c'];
 
-const tagIngredient = document.querySelector(".container-tag-ingredient");
+const tagIngredient = document.querySelector(".recipes-filter__ingredients__tag");
 const selectIngredients = document.querySelector('select[name="ingredients"]');
-const tagAppliance = document.querySelector(".container-tag-appliance");
+const tagAppliance = document.querySelector(".recipes-filter__appliance__tag");
 const selectAppliance = document.querySelector('select[name="appliance"]');
-const tagUstensils = document.querySelector(".container-tag-ustensils");
+const tagUstensils = document.querySelector(".recipes-filter__ustensils__tag");
 const selectUstensils = document.querySelector('select[name="ustensils"]');
 
 let valueOption;
@@ -167,7 +167,7 @@ function createTag(tag, value) {
     if (value !== undefined) {
         //create tag ingredient
         const divTagOption = document.createElement('div');
-        divTagOption.className = "tag-option";
+        divTagOption.className = "recipes-filter__ustensils__tag__option";
         const icon_Close = document.createElement('i');
         icon_Close.className = "fa-solid fa-xmark";
         const tag_Option = document.createElement('span');
@@ -178,7 +178,7 @@ function createTag(tag, value) {
 
         icon_Close.addEventListener("click", () => {
             icon_Close.parentElement.remove();//remove tag 
-            let valueOptionOfIcon = removeAccentText(icon_Close.parentElement.querySelector('.tag-option span').textContent);
+            let valueOptionOfIcon = removeAccentText(icon_Close.parentElement.querySelector('.recipes-filter__ustensils__tag__option span').textContent);
             arrTag = arrTag.filter((tag) => removeAccentText(tag) !== valueOptionOfIcon);//remove value option of tag array
             displayRecipes();//on remove tag, display current recipe of global search 
         });
@@ -191,9 +191,6 @@ function filterByTag() {
         for (let tag of arrTag) {
 
             let valueTag = removeAccentText(tag);// remove accent and lowercase 
-            // let arrTagIngredient = tagIngredient.split(' ');
-            // let arrfirstTagIngredient = arrTagIngredient[0];
-            // let regexTagSearch;//regex
 
             //match ingredients recipe with search of user
             for (let indexRecipe = 0; indexRecipe < recipes.length; indexRecipe++) {
@@ -202,16 +199,10 @@ function filterByTag() {
                 const listIngredientsRecipe = recipes[indexRecipe]["ingredients"];
                 for (let ingredient of listIngredientsRecipe) {
                     let ingrRecipe = removeAccentText(ingredient["ingredient"]);
-                    // regexTagSearch = new RegExp(arrfirstTagIngredient);
 
                     if (ingrRecipe === valueTag) {
                         resultSearch.push(listCardRecipes[indexRecipe]);
                     }
-                    // else if (ingrRecipe.match(regexTagSearch) !== null) {
-                    //     // check if array of match is not null 
-                    //     resultSearch.push(listCardRecipes[indexRecipe]);
-                    //     tag = tagIngredient;
-                    // }
                 }
 
                 //match appliance recipe
@@ -241,117 +232,104 @@ function resultSearchUser() {
     let filterResultSearchBar;
     if (filterBySearchBar() !== undefined) {
         filterResultSearchBar = filterBySearchBar().resultSearch;
-        // resultSearchBar.push(filterResultSearchBar);
-        //searchBarUser.push(filterBySearchBar().textSearchUser);
     }
 
-    //result tag ingredient
+    //result tag 
     let filterResultTag;
-    let testAddTag;
+    let newResultGlobalSearch = new Array();
     if (filterByTag() !== undefined) {
         filterResultTag = filterByTag().resultSearch;
-        // resultTagIngredient.push(filterResultTagIngr);
-        // testAddTag = filterByTag(valueOption).valueTag;
-        // arrTag.push(filterByTagIntegrient().tag);
-    }
+        //match global result with search of user  
+        for (let indexRecipe = 0; indexRecipe < recipes.length; indexRecipe++) {
 
-    //result tag appliance
-    //result tag unstensils
+            let convertIdRecipeToStr = recipes[indexRecipe].id + "";
 
+            for (let result of filterResultTag) {
+                if (convertIdRecipeToStr === result.id) {
 
-    //concat all result array
-    //resultGlobalSearch = resultGlobalSearch.concat(resultSearchBar, resultTagIngredient);
+                    let countTag = 0;
 
-    return { filterResultSearchBar, filterResultTag };
+                    const listIngredientsRecipe = recipes[indexRecipe]["ingredients"];
+                    const applianceRecipe = removeAccentText(recipes[indexRecipe].appliance);
+                    const listUstensilsRecipe = recipes[indexRecipe].ustensils;
 
-}
-function displayRecipes() {//display result search
+                    for (let tag of arrTag) {
 
-    // let uniqueResultGlobalSearch = [...new Set(resultGlobal)];// remove all duplicate of array  
-    let newResultGlobalSearch = new Array();
-    let newResultSearchBar = [...new Set(resultSearchUser().filterResultSearchBar)];
-    let newResultTag = [...new Set(resultSearchUser().filterResultTag)];
-    let countRecipes = new Number();
-    let t = new Array();
+                        //match ingredient recipe
+                        for (let ingredient of listIngredientsRecipe) {
+                            let ingr = removeAccentText(ingredient["ingredient"]);
 
-    //match global result with search of user  
-    for (let indexRecipe = 0; indexRecipe < recipes.length; indexRecipe++) {
+                            if (ingr === removeAccentText(tag)) {
+                                countTag += 1;
+                            }
+                        }
 
-        let convertIdRecipeToStr = recipes[indexRecipe].id + "";
-
-        for (let result of newResultTag) {
-            if (convertIdRecipeToStr === result.id) {
-
-                let countTag = 0;
-
-                //match ingredient recipe
-                const listIngredientsRecipe = recipes[indexRecipe]["ingredients"];
-                const applianceRecipe = removeAccentText(recipes[indexRecipe].appliance);
-                const listUstensilsRecipe = recipes[indexRecipe].ustensils;
-
-
-                // let arrResultIngr = result.querySelectorAll('.content-recipe .ingredients-recipe h4');
-
-                // for (let ingredient of arrResultIngr) {
-                //     let ingr = removeAccentText(ingredient.textContent);
-                for (let tag of arrTag) {
-
-                    //match ingredient recipe
-                    for (let ingredient of listIngredientsRecipe) {
-                        let ingr = removeAccentText(ingredient["ingredient"]);
-                        //  let regex = new RegExp(tag);
-
-                        if (ingr === removeAccentText(tag)) {
+                        //match appliance recipe
+                        if (applianceRecipe === removeAccentText(tag)) {
                             countTag += 1;
                         }
-                        //  else if (ingr.match(regex)) {
-                        //      countTag += 1;
-                        //  }
-                    }
 
-                    //match appliance recipe
-                    if (applianceRecipe === removeAccentText(tag)) {
-                        countTag += 1;
-                    }
-                    
-                    //match ustensils recipe
-                    for (ustensil of listUstensilsRecipe) {
-                        let ustensilRecipe = removeAccentText(ustensil);
+                        //match ustensils recipe
+                        for (ustensil of listUstensilsRecipe) {
+                            let ustensilRecipe = removeAccentText(ustensil);
 
-                        if (ustensilRecipe === removeAccentText(tag)) {
-                            countTag += 1;
+                            if (ustensilRecipe === removeAccentText(tag)) {
+                                countTag += 1;
+                            }
                         }
                     }
-                }
 
-                // const applianceRecipe = removeAccentText(recipes[indexRecipe].appliance);
-
-                // for (let tag of arrTag) {
-
-                //     if (applianceRecipe === removeAccentText(tag)) {
-                //         countTag += 1;
-                //     }
-                // }
-
-
-                // console.log(countTag)
-                if (countTag == arrTag.length && arrTag.length !== 0) {
-                    // console.log(result.querySelector('.content-recipe h2'));
-                    newResultGlobalSearch.push(result);
+                    //if recipe has all tag of search user
+                    if (countTag == arrTag.length && arrTag.length !== 0) {
+                        newResultGlobalSearch.push(result);
+                    }
                 }
             }
         }
     }
+    let t = new Array();
+    if (filterByTag() !== undefined && filterBySearchBar() !== undefined) {
+
+        for (let result1 of filterResultSearchBar) {
+            for (let result2 of newResultGlobalSearch) {
+
+                if (result1 === result2) {
+                    t.push(result1);
+                }
+            }
+        }
+    }
+
+    return { filterResultSearchBar, filterResultTag, newResultGlobalSearch, t };
+}
+function displayRecipes() {//display result search
+
+
+    // let newResultGlobalSearch = new Array();
+    // let newResultSearchBar = [...new Set(resultSearchUser().filterResultSearchBar)];
+    // let newResultTag = [...new Set(resultSearchUser().filterResultTag)];
+    let countRecipes = new Number();
+    // let t = new Array();
+
+
     //display recipes
     if (controlText.value !== "" && arrTag.length == 0) {// case user use the filter tag 
 
+        let newResultSearchBar = [...new Set(resultSearchUser().filterResultSearchBar)];
+
+        let baseDelay = 0.4;
+
         for (let recipe of listCardRecipes) {
             recipe.style.display = "none";
+            //recipe.style.setProperty("--fadeinDelayRecipe", "");
+            recipe.classList.remove("fade-in-recipe");//remove fade in animation
 
-            for (let result of newResultSearchBar) {
-
-                if (recipe === result) {
+            for (let i = 0; i < newResultSearchBar.length; i++) {
+                if (recipe === newResultSearchBar[i]) {
                     recipe.style.display = "block";
+                    newResultSearchBar[i].style.setProperty("--fadeinDelayRecipe", baseDelay + ((i + 1) / 5) + "s");
+                    recipe.offsetWidth;
+                    recipe.classList.add("fade-in-recipe"); //trigger css animation
                 }
 
             }
@@ -361,13 +339,21 @@ function displayRecipes() {//display result search
     }
     else if (arrTag.length !== 0 && controlText.value == "") {// case user use the search bar 
 
+        let newResultGlobalSearch = [...new Set(resultSearchUser().newResultGlobalSearch)];
+
+        let baseDelay = 0.2;
 
         for (let recipe of listCardRecipes) {
             recipe.style.display = "none";
+            // recipe.style.setProperty("--fadeinDelayRecipe", "");
+            recipe.classList.remove("fade-in-recipe");
 
-            for (let result of newResultGlobalSearch) {
-                if (recipe === result) {
+            for (let i = 0; i < newResultGlobalSearch.length; i++) {
+                if (recipe === newResultGlobalSearch[i]) {
                     recipe.style.display = "block";
+                    newResultGlobalSearch[i].style.setProperty("--fadeinDelayRecipe", baseDelay + ((i + 1) / 5) + "s");
+                    recipe.offsetWidth;//trigger a DOM reflow by requesting the element width
+                    recipe.classList.add("fade-in-recipe"); //trigger css animation
                 }
             }
         }
@@ -376,21 +362,30 @@ function displayRecipes() {//display result search
     }
     else if (arrTag.length !== 0 && controlText.value !== "") {// case user use the search bar and filter tag
 
-        for (let result1 of newResultSearchBar) {
-            for (let result2 of newResultGlobalSearch) {
+        let t = [...new Set(resultSearchUser().t)];
 
-                if (result1 === result2) {
-                    t.push(result1);
-                }
-            }
-        }
+        // for (let result1 of newResultSearchBar) {
+        //     for (let result2 of newResultGlobalSearch) {
+
+        //         if (result1 === result2) {
+        //             t.push(result1);
+        //         }
+        //     }
+        // }
+
+        let baseDelay = 0.2;
 
         for (let recipe of listCardRecipes) {
             recipe.style.display = "none";
+            //recipe.style.setProperty("--fadeinDelayRecipe", "");
+            recipe.classList.remove("fade-in-recipe");//remove fade in animation
 
-            for (let gg of t) {
-                if (recipe === gg) {
+            for (let i = 0; i < t.length; i++) {
+                if (recipe === t[i]) {
                     recipe.style.display = "block";
+                    t[i].style.setProperty("--fadeinDelayRecipe", baseDelay + ((i + 1) / 5) + "s");
+                    recipe.offsetWidth;//trigger a DOM reflow by requesting the element width
+                    recipe.classList.add("fade-in-recipe"); //trigger css animation
                 }
             }
         }
@@ -398,8 +393,15 @@ function displayRecipes() {//display result search
         countRecipes = [...new Set(t)].length;
     }
     else {
-        for (let recipe of listCardRecipes) {
-            recipe.style.display = "block";
+        let baseDelay = 0.2;
+
+        for (let i = 0; i < listCardRecipes.length; i++) {
+            //listCardRecipes[i].style.setProperty("--fadeinDelayRecipe", "");
+            listCardRecipes[i].classList.remove("fade-in-recipe");//remove fade in animation
+            listCardRecipes[i].style.display = "block";
+            listCardRecipes[i].style.setProperty("--fadeinDelayRecipe", baseDelay + ((i + 1) / 5) + "s");
+            listCardRecipes[i].offsetWidth; //trigger a DOM reflow by requesting the element width
+            listCardRecipes[i].classList.add("fade-in-recipe"); //trigger css animation
         }
         // calculate total of result recipe
         countRecipes = listCardRecipes.length;

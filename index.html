@@ -12,47 +12,54 @@
 
 <body>
   <div class="container-body">
+    <!-- header -->
     <header id="header">
+      <!-- search bar -->
       <div class="search-bar">
-        <input type="search" class="control-text" placeholder="Rechercher une recette, un ingrédient, ..."
+        <input type="search" class="search-bar__input control-text" placeholder="Rechercher une recette, un ingrédient, ..."
           aria-label="Search" aria-describedby="search-addon" />
-        <span class="icon" id="icon-loop">
+        <span class="search-bar__icon" id="icon-loop">
           <i class="fas fa-search"></i>
         </span>
       </div>
     </header>
     <main id="main">
+      <!-- section filter -->
       <section id="section-filter">
-        <div class="container-recipes-filter">
 
-          <div class="container-filter-ingredients">
+        <!-- filter tag -->
+        <div class="recipes-filter">
+
+          <div class="recipes-filter__ingredients">
             <select name="ingredients">
               <option value="ingredients">Ingrédients</option>
             </select>
-            <div class="container-tag-ingredient">
+            <div class="recipes-filter__ingredients__tag">
             </div>
           </div>
 
-          <div class="container-filter-appliance">
+          <div class="recipes-filter__appliance">
             <select name="appliance">
               <option value="appareils">Appareils</option>
             </select>
-            <div class="container-tag-appliance">
+            <div class="recipes-filter__appliance__tag">
             </div>
           </div>
 
-          <div class="container-filter-ustensils">
+          <div class="recipes-filter__ustensils">
             <select name="ustensils">
               <option value="ustensiles">Ustensiles</option>
             </select>
-            <div class="container-tag-ustensils">
+            <div class="recipes-filter__ustensils__tag">
             </div>
-
           </div>
+          <!-- count recipes -->
+          <span class="count-recipes"></span>
         </div>
       </section>
-      
+      <!-- section recipes -->
       <section id="section">
+        <!-- list recipes -->
         <div class="container-recipes"></div>
       </section>
     </main>

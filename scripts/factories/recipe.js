@@ -9,34 +9,34 @@ function recipeFactory(data) {
         const recipesSection = document.querySelector(".container-recipes");
         
         const divRecipe = document.createElement('div');
-        divRecipe.className = "card-recipe";
+        divRecipe.className = "recipe-card";
         divRecipe.id = id;
         //image
         const imgRecipe = document.createElement('img');
-        imgRecipe.className = "image-recipe";
+        imgRecipe.className = "recipe-card__image";
         imgRecipe.setAttribute("src",picture);
         imgRecipe.setAttribute("alt",name);
         //content
         const divContentRecipe = document.createElement('div');
-        divContentRecipe.className = "content-recipe";
+        divContentRecipe.className = "recipe-card__content";
         const titleRecipe = document.createElement("h2");
         titleRecipe.textContent = name;
 
         const titleDescriptionRecipe = document.createElement("h3");
         titleDescriptionRecipe.textContent = "Recette";
         const divDescriptionRecipe = document.createElement('div');
-        divDescriptionRecipe.className = "description-recipe";
+        divDescriptionRecipe.className = "recipe-card__content__description";
         divDescriptionRecipe.textContent = description;
 
         const titleIngredientsRecipe = document.createElement('h3');
         titleIngredientsRecipe.textContent = "Ingrédients";
         const divIngredientsRecipe = document.createElement('div');
-        divIngredientsRecipe.className = "ingredients-recipe";
+        divIngredientsRecipe.className = "recipe-card__content__ingredients";
 
         let listIngredientsRecipe = ingredients;
         for(let ingredient of listIngredientsRecipe) {
             const divIngredient = document.createElement('div');
-            divIngredient.className = "ingredient-recipe";
+            divIngredient.className = "recipe-card__content__ingredients__ingredient";
 
             const titleIngredient = document.createElement('h4');
             if(ingredient["ingredient"] !== undefined){
