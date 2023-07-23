@@ -8,7 +8,7 @@ function recipeFactory(data) {
         //recipe section
         const recipesSection = document.querySelector(".container-recipes");
         
-        const divRecipe = document.createElement('div');
+        const divRecipe = document.createElement('article');
         divRecipe.className = "recipe-card";
         divRecipe.id = id;
         //image

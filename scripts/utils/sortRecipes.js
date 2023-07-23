@@ -24,11 +24,13 @@ const accent = [
 const noAccent = ['A', 'a', 'E', 'e', 'I', 'i', 'O', 'o', 'U', 'u', 'N', 'n', 'C', 'c'];
 
 const tagIngredient = document.querySelector(".recipes-filter__ingredients__tag");
-const selectIngredients = document.querySelector('select[name="ingredients"]');
+// const headerTagIngredient = document.querySelector(".recipes-filter__ingredients__header");
 const tagAppliance = document.querySelector(".recipes-filter__appliance__tag");
-const selectAppliance = document.querySelector('select[name="appliance"]');
+// const headerTagAppliance = document.querySelector(".recipes-filter__appliance__header");
 const tagUstensils = document.querySelector(".recipes-filter__ustensils__tag");
-const selectUstensils = document.querySelector('select[name="ustensils"]');
+// const headerTagUstensils = document.querySelector(".recipes-filter__ustensils__header");
+const headerRecipeTag = document.querySelectorAll(".flex-header-recipe-tag");
+
 
 let valueOption;
 
@@ -41,31 +43,86 @@ let resultGlobalSearch = new Array();// all result of research are contains in t
 let searchBarUser = new Array();
 let arrTag = new Array();
 
-
+const tagFilterRecipes = document.querySelectorAll(".recipes-filterTEST");
+const iconRecipeTag = document.querySelectorAll(".flex-header-recipe-tag i");
+const controlTextRecipeTag = document.querySelectorAll(".search-tag");
+const optionsTag = document.querySelectorAll(".list-options-tag");
+const arrOptionsTag = Array.from(optionsTag);
+const listOptionsTag = document.querySelectorAll(".list-options-tag span");
+let indexTag;
 //EVENTS
 controlText.addEventListener("input", () => {
     displayRecipes();
 });
-selectIngredients.addEventListener("change", (event) => {
-    valueOption = event.target.value;
-    createTag(tagIngredient, valueOption);
+
+headerRecipeTag.forEach((header,index) => header.addEventListener("click",() => {
+    indexTag = index;
+    displayHideOptionsOfTag(indexTag)
+}));// event display list of options and search bar tag
+listOptionsTag.forEach((option) => option.addEventListener("click", (event) => {
+
+    indexTag = arrOptionsTag.indexOf(option.parentElement);
+    valueOption = event.target.textContent;
+    createTag(tagFilterRecipes[indexTag], valueOption);
     arrTag.push(valueOption);//add tag in array 
     displayRecipes();//display recipe by research of user
-});
-selectAppliance.addEventListener("change", (event) => {
-    valueOption = event.target.value;
-    createTag(tagAppliance, valueOption);
-    arrTag.push(valueOption);//add tag in array 
-    displayRecipes();//display recipe by research of user
-});
-selectUstensils.addEventListener("change", (event) => {
-    valueOption = event.target.value;
-    createTag(tagUstensils, valueOption);
-    arrTag.push(valueOption);//add tag in array 
-    displayRecipes();//display recipe by research of user
-});
+    displayHideOptionsOfTag(indexTag);
+}));
+controlTextRecipeTag.forEach((text,index) => text.addEventListener("input",() => {
+    displayOptions(index);
+}));
 
 //FUNCTIONS
+function displayHideOptionsOfTag(index){// display or hide list of options and search bar tag 
+
+    if(controlTextRecipeTag[index].style.display == "block" && optionsTag[index].style.display == "flex"){
+        controlTextRecipeTag[index].style.display = "none";
+        optionsTag[index].style.display = "none";
+        iconRecipeTag[index].classList.remove("fa-rotate-180");
+        controlTextRecipeTag[index].value = "";
+        for(let option of optionsTag[index].childNodes){
+            option.style.display = "block";
+        }
+    }
+    else {
+        controlTextRecipeTag[index].style.display = "block";
+        controlTextRecipeTag[index].focus();
+        optionsTag[index].style.display = "flex";
+        iconRecipeTag[index].classList.add("fa-rotate-180");
+        controlTextRecipeTag[index].value = "";
+        for(let option of optionsTag[index].childNodes){
+            option.style.display = "block";
+        }
+    }
+}
+function displayOptions(index){
+
+    let textSearchUser = removeAccentText(controlTextRecipeTag[index].value);// remove accent and lowercase 
+    let regexSearch = new RegExp(textSearchUser);;//regex
+    let resultSearch = new Array();
+    let optionTag;
+
+    //match search of user with list of options
+    for(let option of optionsTag[index].childNodes){
+         
+            optionTag = removeAccentText(option.textContent);
+
+            if(optionTag.match(regexSearch) !== null){
+                resultSearch.push(option);
+            }
+         
+    }
+    //display list option by search of user
+    for(let option of optionsTag[index].childNodes){
+        option.style.display = "none";
+        for(let result of resultSearch){
+            if(option === result){
+                option.style.display = "block";
+            }
+        }
+    }
+
+}
 function controlSearchBar() {//control value of search bar
 
     if (controlText.value == "") {
@@ -157,6 +214,77 @@ function filterBySearchBar() { //return the result of search bar
                 }
             }
         }
+        return { resultSearch, textSearchUser };
+    }
+    else {
+        controlSearchBar();
+    }
+}
+function newfilterBySearchBar() { //return the result of search bar 
+
+    if (controlSearchBar()["resultEvent"] == "true") {
+
+        let textSearchUser = removeAccentText(controlSearchBar()["searchRecipe"]);// remove accent and lowercase 
+        let arrTextSearchUser = textSearchUser.split(' '); // split user search by whitespace
+        let regexSearch;//regex
+        let resultSearch = new Array();
+
+        //match title-ingredients-appliance-ustensils recipe with search of user
+        recipes.forEach((recipe,index) => {
+            //match title recipe 
+            const titleRecipe = recipe["name"];
+            let titRecipe = removeAccentText(titleRecipe);
+
+            arrTextSearchUser.forEach((searchUser) => {
+                regexSearch = new RegExp(searchUser);
+                if (titRecipe.match(regexSearch) !== null && titRecipe.match(regexSearch)[0].length > 2) {
+                    // check if array of match is not null and 3 or more characters
+                    resultSearch.push(listCardRecipes[index]);
+
+                }
+            });
+             //match ingredient recipe 
+             const listIngredientsRecipe = recipe["ingredients"];
+             listIngredientsRecipe.forEach((ingredient) => {
+                let ingrRecipe = removeAccentText(ingredient["ingredient"]);
+ 
+                arrTextSearchUser.forEach((searchUser) => {
+                    regexSearch = new RegExp(searchUser);
+                    if (ingrRecipe.match(regexSearch) !== null && ingrRecipe.match(regexSearch)[0].length > 2) {
+                        // check if array of match is not null and 3 or more characters
+                        resultSearch.push(listCardRecipes[index]);
+                    }
+                });
+             });
+            
+             //match appliance recipe 
+             const applianceRecipe = recipe["appliance"];
+             let appliRecipe = removeAccentText(applianceRecipe);
+ 
+             arrTextSearchUser.forEach((searchUser) => {
+                regexSearch = new RegExp(searchUser);
+                if (appliRecipe.match(regexSearch) !== null && appliRecipe.match(regexSearch)[0].length > 2) {
+                    // check if array of match is not null and 3 or more characters
+                    resultSearch.push(listCardRecipes[index]);
+                }
+             });
+        
+             //match ustensils recipe 
+             const listUstensilsRecipe = recipe["ustensils"];
+             listUstensilsRecipe.forEach((ustensils) => {
+                let ustenRecipe = removeAccentText(ustensils);
+ 
+                arrTextSearchUser.forEach((searchUser) => {
+                    regexSearch = new RegExp(searchUser);
+                    if (ustenRecipe.match(regexSearch) !== null && ustenRecipe.match(regexSearch)[0].length > 2) {
+                        // check if array of match is not null and 3 or more characters
+                        resultSearch.push(listCardRecipes[index]);
+                    }
+                });
+             });
+             
+        });
+
         return { resultSearch, textSearchUser };
     }
     else {

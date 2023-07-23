@@ -11,11 +11,22 @@ $black : #1B1B1B;
     padding: 0;
 }
 
+/* font*/
+* {
+    font-family: 'Manrope', sans-serif;
+}
+
+h2,
+label {
+    font-family: 'Anton', sans-serif;
+}
+
 /*link*/
 a {
     text-decoration: none;
     color: $black;
 }
+
 /* fade in animation */
 @keyframes fade-in {
     0% {
@@ -26,8 +37,9 @@ a {
         opacity: 1;
     }
 }
+
 /*fade in recipe card*/
-.fade-in-recipe{
+.fade-in-recipe {
     animation: fade-in 1s;
     animation-fill-mode: backwards;
     animation-delay: var(--fadeinDelayRecipe);
@@ -35,7 +47,6 @@ a {
 
 /* body */
 body {
-    font-family: "DM Sans", sans-serif;
     margin: 0;
 }
 
@@ -44,29 +55,85 @@ body {
     margin: auto;
     max-width: 1440px;
     background-color: $gray;
-    padding: 0px 60px;
+    border-top: solid white;
+    border-top-width: thick;
 }
 
 /* header */
+#header {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    background-image: url("/assets/header-img.jpg");
+    background-size: cover;
+    padding: 50px;
+    min-height: 650px;
+}
+
+#logo {
+    width: 190px;
+    height: 25px;
+}
+
 /*search bar*/
 .search-bar {
     position: relative;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100px;
-    margin-bottom: 20px;
+    margin-bottom: 150px;
+
+    label {
+        color: #FFD15B;
+        margin-bottom: 20px;
+        font-size: 42px;
+        width: 50%;
+        text-align: center;
+        text-transform: uppercase;
+
+    }
 
     &__input {
-        width: 400px;
-        height: 50px;
+        position: relative;
+        width: 65%;
+    
+        input {
+            width: 100%;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        &__icon{
+           position: absolute;
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           border-radius: 10px;
+           background-color: #1B1B1B;
+           font-size: 25px;
+           right: 15px;
+    top: 9px;
+    width: 55px;
+    height: 55px;
+    transition: all 0.2s;
+
+           i {
+            color: white
+           }
+
+           &:hover{
+            background-color: #FFD15B;
+            cursor: pointer;
+
+            i{
+                color: #1B1B1B;
+            }
+           }
+        }
     }
-
-    &__icon {
-        font-size: 30px;
-
-    }
-
+  
     &[data-error]::after {
         /* data error message */
         position: absolute;
@@ -85,6 +152,11 @@ body {
     }
 }
 
+/* main */
+#main {
+    padding: 0px 60px;
+}
+
 /* section filter */
 /* filter tag */
 .recipes-filter {
@@ -93,11 +165,23 @@ body {
     flex-direction: row;
     flex-wrap: nowrap;
 
+
     &__ingredients,
     &__appliance,
     &__ustensils {
         display: flex;
         flex-direction: column;
+        flex-wrap: nowrap;
+        // background-color: white;
+        max-height: 250px;
+
+
+        &__header {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+            flex-wrap: nowrap;
+        }
 
         &__tag {
             display: flex;
@@ -116,6 +200,53 @@ body {
         }
     }
 }
+
+.search-tag {
+    display: none;
+}
+
+.list-options-tag {
+    display: none;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    height: 100%;
+    overflow-y: scroll;
+    /* Hide scrollbar for IE, Edge and Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.list-options-tag::-webkit-scrollbar {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    display: none;
+}
+
+// .flex-header-recipe-tag {
+//     display: flex;
+//     justify-content: space-between;
+//     flex-direction: row;
+//     flex-wrap: nowrap;
+// }
+// /*TEST*/
+// .TESTrecipes-filter {
+//     display: flex;
+//     flex-direction: column;
+//     flex-wrap: nowrap;
+//     background-color: white;
+
+
+//     &__ingredients {
+//         display: flex;
+//         flex-direction: column;
+//         flex-wrap: nowrap;
+//         height: 250px;
+//     }
+// }
+
+// .TEST
+
 
 /*count recipes*/
 .count-recipes {
