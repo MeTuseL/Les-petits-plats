@@ -8,8 +8,8 @@
   <title>Les petits plats</title>
   <!-- fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@500&display=swap" rel="stylesheet">
   <!-- kit icons frontawesome  -->
   <script src="https://kit.fontawesome.com/f4ea6028b2.js" crossorigin="anonymous" defer></script>
 </head>
@@ -18,20 +18,20 @@
   <div class="container-body">
     <!-- header -->
     <header id="header">
-    
+
       <!-- logo -->
       <img id="logo" src="/assets/logo-petits-plats.png" alt="Logo les petits plats">
       <!-- search bar -->
       <div class="search-bar">
 
         <label for="search-recipe">Cherchez parmi plus de 1500 recettes du quotidien,simples et délicieuses</label>
-      <div class="search-bar__input">
-        <input type="search" id="search-recipe" class="control-text"
-          placeholder="Rechercher une recette, un ingrédient, ..." />
-        <span class="search-bar__input__icon">
-          <i class="fas fa-search"></i>
-        </span>
-      </div>
+        <div class="search-bar__input">
+          <input type="search" id="search-recipe" class="control-text"
+            placeholder="Rechercher une recette, un ingrédient, ..." />
+          <span class="search-bar__input__icon">
+            <i class="fas fa-search"></i>
+          </span>
+        </div>
       </div>
     </header>
     <main id="main">
@@ -41,68 +41,53 @@
         <!-- filter tag -->
         <div class="recipes-filter">
 
-          <!-- <div class="recipes-filter__ingredients">
-            <select name="ingredients">
-              <option value="ingredients">Ingrédients</option>
-            </select>
-            <div class="recipes-filter__ingredients__tag">
-            </div>
-          </div> -->
-
           <div class="recipes-filter__ingredients" id="ingrTag">
-            <div class="recipes-filter__ingredients__header flex-header-recipe-tag">
+            <div class="recipes-filter__header">
               <span>Ingrédients</span>
-              <i class="fa-solid fa-chevron-up"></i>
+              <i class="fa-solid fa-chevron-down"></i>
             </div>
-            <input type="search" class="search-tag" />
+            <div class="search-tag">
+              <input type="search" class="search-tag__input" />
+              <span class="search-tag__icon">
+                <i class="fas fa-search"></i>
+              </span>
+            </div>
             <ul class="list-options-tag"></ul>
-
-            <div class="recipes-filter__ingredients__tag recipes-filterTEST">
-            </div>
           </div>
 
           <div class="recipes-filter__appliance" id="applTag">
-            <div class="recipes-filter__appliance__header flex-header-recipe-tag">
+            <div class="recipes-filter__header">
               <span>Appareils</span>
-              <i class="fa-solid fa-chevron-up"></i>
+              <i class="fa-solid fa-chevron-down"></i>
             </div>
-            <input type="search" class="search-tag" />
+            <div class="search-tag">
+              <input type="search" class="search-tag__input" />
+              <span class="search-tag__icon">
+                <i class="fas fa-search"></i>
+              </span>
+            </div>
             <ul class="list-options-tag"></ul>
-
-            <div class="recipes-filter__appliance__tag recipes-filterTEST">
-            </div>
           </div>
 
           <div class="recipes-filter__ustensils" id="ustenTag">
-            <div class="recipes-filter__ustensils__header flex-header-recipe-tag">
+            <div class="recipes-filter__header">
               <span>Ustensiles</span>
-              <i class="fa-solid fa-chevron-up"></i>
+              <i class="fa-solid fa-chevron-down"></i>
             </div>
-            <input type="search" class="search-tag" />
+            <div class="search-tag">
+              <input type="search" class="search-tag__input" />
+              <span class="search-tag__icon">
+                <i class="fas fa-search"></i>
+              </span>
+            </div>
             <ul class="list-options-tag"></ul>
-
-            <div class="recipes-filter__ustensils__tag recipes-filterTEST">
-            </div>
           </div>
-
-          <!-- <div class="recipes-filter__appliance">
-            <select name="appliance">
-              <option value="appareils">Appareils</option>
-            </select>
-            <div class="recipes-filter__appliance__tag">
-            </div>
-          </div>
-
-          <div class="recipes-filter__ustensils">
-            <select name="ustensils">
-              <option value="ustensiles">Ustensiles</option>
-            </select>
-            <div class="recipes-filter__ustensils__tag">
-            </div>
-          </div> -->
 
           <!-- count recipes -->
           <span class="count-recipes"></span>
+        </div>
+
+        <div class="recipes-filter__tag">
         </div>
       </section>
       <!-- section recipes -->

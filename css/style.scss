@@ -1,5 +1,5 @@
 /* colours */
-$gray : #E5E5E5;
+$gray : #e5e5e5d6;
 $darkGray : #7A7A7A;
 $yellow : #FFD15B;
 $black : #1B1B1B;
@@ -98,46 +98,58 @@ body {
     &__input {
         position: relative;
         width: 65%;
-    
+
         input {
             width: 100%;
             padding: 25px;
             border-radius: 10px;
+            padding-right: 10%;
+
+           &::-webkit-search-cancel-button {
+                cursor: pointer;
+                font-size: 30px;
+                filter: invert(49%) sepia(2%) saturate(12%) hue-rotate(339deg) brightness(96%) contrast(91%);
+
+                }
         }
 
-        &__icon{
-           position: absolute;
-           display: flex;
-           justify-content: center;
-           align-items: center;
-           border-radius: 10px;
-           background-color: #1B1B1B;
-           font-size: 25px;
-           right: 15px;
-    top: 9px;
-    width: 55px;
-    height: 55px;
-    transition: all 0.2s;
+        &__icon {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            background-color: #1B1B1B;
+            font-size: 25px;
+            right: 15px;
+            top: 9px;
+            width: 55px;
+            height: 55px;
+            transition: all 0.2s;
 
-           i {
-            color: white
-           }
-
-           &:hover{
-            background-color: #FFD15B;
-            cursor: pointer;
-
-            i{
-                color: #1B1B1B;
+            i {
+                color: white
             }
-           }
+
+            &:hover {
+                background-color: #FFD15B;
+                cursor: pointer;
+                box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+
+                i {
+                    color: #1B1B1B;
+
+                }
+            }
         }
     }
-  
+
     &[data-error]::after {
         /* data error message */
         position: absolute;
-        bottom: -10px;
+        top: 105%;
+        left: 19%;
         content: attr(data-error);
         color: $yellow;
         display: block;
@@ -154,7 +166,7 @@ body {
 
 /* main */
 #main {
-    padding: 0px 60px;
+    padding: 20px 60px;
 }
 
 /* section filter */
@@ -162,9 +174,10 @@ body {
 .recipes-filter {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
     flex-direction: row;
     flex-wrap: nowrap;
-
+    margin-bottom: 25px;
 
     &__ingredients,
     &__appliance,
@@ -172,37 +185,98 @@ body {
         display: flex;
         flex-direction: column;
         flex-wrap: nowrap;
-        // background-color: white;
+        background-color: white;
+        border-radius: 10px;
         max-height: 250px;
+        width: 15%;
+        overflow: hidden;
 
-
-        &__header {
-            display: flex;
-            justify-content: space-between;
-            flex-direction: row;
-            flex-wrap: nowrap;
+        &:hover{
+            cursor: pointer;
         }
 
-        &__tag {
-            display: flex;
-            flex-direction: column;
-            flex-wrap: nowrap;
+    }
 
-            &__option {
-                display: flex;
-                flex-direction: row;
-                flex-wrap: nowrap;
-                justify-content: space-between;
-                align-items: center;
-                background-color: $yellow;
-                border-radius: 25px;
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        padding: 15px;
+
+    }
+
+    &__tag {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10px;
+
+        &__option {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            align-items: center;
+            background-color: $yellow;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 13px;
+            transition: all 0.2s;
+
+            span{
+                padding-right: 25px;
+            }
+
+            &:hover{
+                cursor: default;
+                font-weight: bold;
+
+            }
+           
+            i{
+                font-size: 13px;
+                padding: 2px 3px;
+                border-radius: 50%;
+            }
+            i:hover{
+                cursor: pointer;;
+                color: $yellow;
+                background-color: #1B1B1B;
             }
         }
     }
+
 }
 
+
 .search-tag {
+    position: relative;
     display: none;
+    margin: 0 15px 15px 15px;
+
+    &__input {
+        width: 100%;
+        padding: 8px;
+        padding-right: 25px;
+        border: solid 2px rgb(202, 202, 202);
+        border-radius: 3px;
+        outline: none;
+        color: rgb(202, 202, 202);
+
+        &::-webkit-search-cancel-button {
+            cursor: pointer;
+            filter: invert(49%) sepia(2%) saturate(12%) hue-rotate(339deg) brightness(96%) contrast(91%);
+
+            }
+    }
+
+    &__icon {
+        position: absolute;
+        color: rgb(202, 202, 202);
+            right: 8px;
+    top: 8px;
+    }
 }
 
 .list-options-tag {
@@ -216,6 +290,14 @@ body {
     /* IE and Edge */
     scrollbar-width: none;
     /* Firefox */
+
+    span {
+        padding: 10px 15px;
+
+        &:hover {
+            background-color: $yellow;
+        }
+    }
 }
 
 .list-options-tag::-webkit-scrollbar {
@@ -223,35 +305,12 @@ body {
     display: none;
 }
 
-// .flex-header-recipe-tag {
-//     display: flex;
-//     justify-content: space-between;
-//     flex-direction: row;
-//     flex-wrap: nowrap;
-// }
-// /*TEST*/
-// .TESTrecipes-filter {
-//     display: flex;
-//     flex-direction: column;
-//     flex-wrap: nowrap;
-//     background-color: white;
-
-
-//     &__ingredients {
-//         display: flex;
-//         flex-direction: column;
-//         flex-wrap: nowrap;
-//         height: 250px;
-//     }
-// }
-
-// .TEST
-
 
 /*count recipes*/
 .count-recipes {
-    font-weight: 600;
+    font-family: 'Anton', sans-serif;
     font-size: 20px;
+    margin-left: 25%;
 }
 
 /* section recipes */
@@ -317,7 +376,7 @@ body {
                 }
 
                 span {
-                    color: rgb(198, 193, 193);
+                    color: $gray;
                     font-weight: 400;
                     font-size: 15px;
                     margin-top: 5px;
