@@ -7,15 +7,19 @@ function recipeFactory(data) {
     function getRecipeCardDOM() {// recipe card info Homepage
         //recipe section
         const recipesSection = document.querySelector(".container-recipes");
-        
+
         const divRecipe = document.createElement('article');
         divRecipe.className = "recipe-card";
         divRecipe.id = id;
+        //time 
+        const timeRecipe = document.createElement('span');
+        timeRecipe.className = "recipe-card__time";
+        timeRecipe.textContent = time+"min";
         //image
         const imgRecipe = document.createElement('img');
         imgRecipe.className = "recipe-card__image";
-        imgRecipe.setAttribute("src",picture);
-        imgRecipe.setAttribute("alt",name);
+        imgRecipe.setAttribute("src", picture);
+        imgRecipe.setAttribute("alt", name);
         //content
         const divContentRecipe = document.createElement('div');
         divContentRecipe.className = "recipe-card__content";
@@ -34,20 +38,20 @@ function recipeFactory(data) {
         divIngredientsRecipe.className = "recipe-card__content__ingredients";
 
         let listIngredientsRecipe = ingredients;
-        for(let ingredient of listIngredientsRecipe) {
+        for (let ingredient of listIngredientsRecipe) {
             const divIngredient = document.createElement('div');
             divIngredient.className = "recipe-card__content__ingredients__ingredient";
 
             const titleIngredient = document.createElement('h4');
-            if(ingredient["ingredient"] !== undefined){
+            if (ingredient["ingredient"] !== undefined) {
                 titleIngredient.textContent = ingredient["ingredient"];
             }
 
             const quantityIngredient = document.createElement('span');
-            if(ingredient["quantity"] !== undefined){
+            if (ingredient["quantity"] !== undefined) {
                 quantityIngredient.textContent += ingredient["quantity"];
             }
-            if(ingredient["unit"] !== undefined){
+            if (ingredient["unit"] !== undefined) {
                 quantityIngredient.textContent += ingredient["unit"];
             }
 
@@ -58,6 +62,7 @@ function recipeFactory(data) {
 
         //add node
         recipesSection.appendChild(divRecipe);
+        divRecipe.appendChild(timeRecipe);
         divRecipe.appendChild(imgRecipe);
         divRecipe.appendChild(divContentRecipe);
         divContentRecipe.appendChild(titleRecipe);
@@ -68,5 +73,6 @@ function recipeFactory(data) {
 
         return (recipesSection);
     }
-    return { name, image, getRecipeCardDOM};
+
+    return { name, image, getRecipeCardDOM };
 }

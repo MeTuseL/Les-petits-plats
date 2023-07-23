@@ -167,6 +167,7 @@ body {
 /* main */
 #main {
     padding: 20px 60px;
+    padding-bottom: 100px;
 }
 
 /* section filter */
@@ -331,7 +332,26 @@ body {
     flex-direction: column;
     background-color: white;
     border-radius: 25px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    transform: scale(1);
+transition: all 0.3s;
 
+    &:hover{
+        cursor: pointer;
+      transform: scale(1.03);
+    }
+    &__time{
+        position: absolute;
+        right: 0;
+        top: 0;
+        background-color: $yellow;
+        border-radius: 25px;
+        padding: 5px 20px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        margin: 20px;
+        font-size: 13px;
+
+    }
     &__image {
         width: 100%;
         height: 250px;
@@ -348,16 +368,16 @@ body {
 
         h3 {
             color: $darkGray;
-            font-weight: 400;
+            font-weight: 500;
             font-size: 15px;
             text-transform: uppercase;
             margin: 20px 0;
         }
 
         &__description {
-            height: 70px;
+            height: 76px;
             font-weight: 400;
-            font-size: 15px;
+            font-size: 14px;
             overflow: hidden;
         }
 
@@ -376,7 +396,7 @@ body {
                 }
 
                 span {
-                    color: $gray;
+                    color: $darkGray;
                     font-weight: 400;
                     font-size: 15px;
                     margin-top: 5px;
@@ -384,4 +404,13 @@ body {
             }
         }
     }
+}
+/* error message */
+.no-recipe-found{
+    display: none;
+    font-size: 25px;
+    color: $darkGray;
+    font-family: 'Anton', sans-serif;
+    text-align: center;
+    padding: 25px;
 }

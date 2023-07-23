@@ -19,14 +19,12 @@ async function displayData(dataRecipes) {// display data recipe
         listCardRecipes[i].classList.add("fade-in-recipe"); //trigger css animation
     }
 
-    const listOptionsTag = document.querySelectorAll(".list-options-tag");//TEST
-
+    //add list of options by ingredient-appliance-ustensils 
+    const listOptionsTag = document.querySelectorAll(".list-options-tag");
     for (let optionTag of listOptionsTag) {
         if (optionTag.parentElement.id === "ingrTag") {
             //tag ingredients 
-            const selectIngredients = document.querySelector('select[name="ingredients"]');
             let arrListOptionsIngr = new Array();
-
 
             for (let recipe of dataRecipes) {
                 const listIngredientsRecipe = recipe["ingredients"];
@@ -37,13 +35,8 @@ async function displayData(dataRecipes) {// display data recipe
             let uniqueOptionsIngr = [...new Set(arrListOptionsIngr)];    // remove all duplicate of array 
             uniqueOptionsIngr.sort();
 
-            for (let uniqueOp of uniqueOptionsIngr) {
-                // const optionIngr = document.createElement('option');
-                // optionIngr.setAttribute('value', uniqueOp);
-                // optionIngr.textContent = uniqueOp;
-                // selectIngredients.appendChild(optionIngr);
-                //TEST
-
+            for (let uniqueOp of uniqueOptionsIngr) {//add option
+                
                 const spanOption = document.createElement('span');
                 spanOption.textContent = uniqueOp;
                 optionTag.appendChild(spanOption);
@@ -51,10 +44,7 @@ async function displayData(dataRecipes) {// display data recipe
         }
         else if (optionTag.parentElement.id === "applTag") {
             //tag appliance 
-            const selectAppliance = document.querySelector('select[name="appliance"]');
             let arrListOptionsAppl = new Array();
-            // const listOptionsTagAppl = document.querySelector(".list-options-tag appl");//TEST
-
 
             for (let recipe of dataRecipes) {
                 const applianceRecipe = recipe["appliance"];
@@ -63,11 +53,7 @@ async function displayData(dataRecipes) {// display data recipe
             let uniqueOptionsAppl = [...new Set(arrListOptionsAppl)];    // remove all duplicate of array 
             uniqueOptionsAppl.sort();
 
-            for (let uniqueOp of uniqueOptionsAppl) {
-                // const optionAppl = document.createElement('option');
-                // optionAppl.setAttribute('value', uniqueOp);
-                // optionAppl.textContent = uniqueOp;
-                // selectAppliance.appendChild(optionAppl);
+            for (let uniqueOp of uniqueOptionsAppl) {//add option
 
                 const spanOption = document.createElement('span');
                 spanOption.textContent = uniqueOp;
@@ -76,10 +62,7 @@ async function displayData(dataRecipes) {// display data recipe
         }
         else if (optionTag.parentElement.id === "ustenTag") {
             //tag ustensils 
-            const selectUstensils = document.querySelector('select[name="ustensils"]');
             let arrListOptionsUst = new Array();
-            // const listOptionsTagUsten = document.querySelector(".list-options-tag usten");//TEST
-
 
             for (let recipe of dataRecipes) {
                 const listUstensilsRecipe = recipe["ustensils"];
@@ -90,12 +73,7 @@ async function displayData(dataRecipes) {// display data recipe
             let uniqueOptionsUst = [...new Set(arrListOptionsUst)];    // remove all duplicate of array 
             uniqueOptionsUst.sort();
 
-            for (let uniqueOp of uniqueOptionsUst) {
-                // const optionUst = document.createElement('option');
-                // optionUst.setAttribute('value', uniqueOp);
-                // optionUst.textContent = uniqueOp;
-                // selectUstensils.appendChild(optionUst);
-
+            for (let uniqueOp of uniqueOptionsUst) {//add option
                 const spanOption = document.createElement('span');
                 spanOption.textContent = uniqueOp;
                 optionTag.appendChild(spanOption);

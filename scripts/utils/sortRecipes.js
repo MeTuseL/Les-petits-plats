@@ -45,6 +45,7 @@ const optionsTag = document.querySelectorAll(".list-options-tag");
 const arrOptionsTag = Array.from(optionsTag);
 const listOptionsTag = document.querySelectorAll(".list-options-tag span");
 let indexTag;
+const noRecipeFound = document.querySelector(".no-recipe-found");
 //EVENTS
 controlText.addEventListener("input", () => {
     displayRecipes();
@@ -147,7 +148,7 @@ function controlSearchBar() {//control value of search bar
     }
     else if (controlText.value.length < 3) {
         searchBar.dataset.errorVisible = "true";
-        searchBar.dataset.error = "Veuillez saisir plus de 3 caractères.";
+        searchBar.dataset.error = "Veuillez saisir au moins plus de 3 caractères.";
         resultEvent = "false";
     }
     else {
@@ -552,5 +553,13 @@ function displayRecipes() {//display result search
     }
     //total recipes
     totRecipes.textContent = countRecipes + " recettes";
+
+    //no recipe found 
+    if(countRecipes == 0){
+        noRecipeFound.style.display = "block";
+    }
+    else{
+        noRecipeFound.style.display = "none";
+    }
 
 }
