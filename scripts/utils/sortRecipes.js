@@ -306,7 +306,7 @@ function newfilterBySearchBar() { //return the result of search bar
     else {
         controlSearchBar();
     }
-}
+}//NEWWWW
 function createTag(value) {
     if (value !== undefined) {
         //create tag 
