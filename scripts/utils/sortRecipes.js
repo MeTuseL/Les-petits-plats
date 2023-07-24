@@ -59,7 +59,7 @@ listOptionsTag.forEach((option) => option.addEventListener("click", (event) => {
 
     indexTag = arrOptionsTag.indexOf(option.parentElement);
     valueOption = event.target.textContent;
-    
+
     if (arrTag.length == 0) {
         createTag(valueOption);
         arrTag.push(valueOption);//add tag in array 
@@ -73,7 +73,7 @@ listOptionsTag.forEach((option) => option.addEventListener("click", (event) => {
                 countTag += 1;
             }
         }
-        if(countTag == 0){
+        if (countTag == 0) {
             createTag(valueOption);
             arrTag.push(valueOption);//add tag in array 
             displayRecipes();//display recipe by research of user
@@ -174,65 +174,69 @@ function filterBySearchBar() { //return the result of search bar
         let textSearchUser = removeAccentText(controlSearchBar()["searchRecipe"]);// remove accent and lowercase 
         let arrTextSearchUser = textSearchUser.split(' '); // split user search by whitespace
         let regexSearch;//regex
-        let resultSearch = new Array();
-
-        for(let recipe of listCardRecipes){
-            resultSearch.push(recipe);
-        }
-
-
-        //match title-ingredients-appliance-ustensils recipe with search of user
+        let resultSearch = [];
+        let resultTitle;
+        let resultAppliance;
+        let resultIngredient;
+        let resultUstensils;
+      
         recipes.forEach((recipe, index) => {
-            //match title-appliance recipe 
-            const titleRecipe = recipe["name"];
-            let titRecipe = removeAccentText(titleRecipe);
-            const applianceRecipe = recipe["appliance"];
-            let appliRecipe = removeAccentText(applianceRecipe);
-           
             arrTextSearchUser.forEach((searchUser) => {
                 regexSearch = new RegExp(searchUser);
-                
-                if (titRecipe.match(regexSearch) !== null && titRecipe.match(regexSearch)[0].length > 2 ||
-                appliRecipe.match(regexSearch) !== null && appliRecipe.match(regexSearch)[0].length > 2) {
-                    // check if array of match is not null and 3 or more characters
-                    resultSearch.filter((rec) => rec === listCardRecipes[index]);
-                }
-            });
-       
-            //match ingredient recipe 
-            const listIngredientsRecipe = recipe["ingredients"];
-            listIngredientsRecipe.forEach((ingredient) => {
-                let ingrRecipe = removeAccentText(ingredient["ingredient"]);
 
-                arrTextSearchUser.forEach((searchUser) => {
-                    regexSearch = new RegExp(searchUser);
-                    if (ingrRecipe.match(regexSearch) !== null && ingrRecipe.match(regexSearch)[0].length > 2) {
-                        // check if array of match is not null and 3 or more characters
-                        resultSearch.filter((rec) => rec === listCardRecipes[index]);
+                //match title recipe
+                let titRecipe = removeAccentText(recipe["name"]);
+                resultTitle = recipes.filter((recipe) => matchRecipes(recipe, titRecipe, regexSearch));
+                resultTitle.forEach((retitle) => {
+                    if (recipe == retitle) {
+                        resultSearch.push(listCardRecipes[index]);
                     }
                 });
-            });
-
-            //match ustensils recipe 
-            const listUstensilsRecipe = recipe["ustensils"];
-            listUstensilsRecipe.forEach((ustensils) => {
-                let ustenRecipe = removeAccentText(ustensils);
-
-                arrTextSearchUser.forEach((searchUser) => {
-                    regexSearch = new RegExp(searchUser);
-                    if (ustenRecipe.match(regexSearch) !== null && ustenRecipe.match(regexSearch)[0].length > 2) {
-                        // check if array of match is not null and 3 or more characters
-                        resultSearch.filter((rec) => rec === listCardRecipes[index]);
+                //match appliance recipe
+                let appliRecipe = removeAccentText(recipe["appliance"]);
+                resultAppliance = recipes.filter((recipe) => matchRecipes(recipe, appliRecipe, regexSearch));
+                resultAppliance.forEach((reAppl) => {
+                    if (recipe == reAppl) {
+                        resultSearch.push(listCardRecipes[index]);
                     }
                 });
+                //match ingredient recipe
+                const listIngredientsRecipe = recipe["ingredients"];
+                listIngredientsRecipe.forEach((ingredient) => {
+                    let ingrRecipe = removeAccentText(ingredient["ingredient"]);
+                    resultIngredient = recipes.filter((recipe) => matchRecipes(recipe, ingrRecipe, regexSearch));
+                    resultIngredient.forEach((reIngr) => {
+                        if (recipe == reIngr) {
+                            resultSearch.push(listCardRecipes[index]);
+                        }
+                    });
+                });
+                //match ustensils recipe
+                const listUstensilsRecipe = recipe["ustensils"];
+                listUstensilsRecipe.forEach((ustensils) => {
+                    let ustenRecipe = removeAccentText(ustensils);
+                    resultUstensils = recipes.filter((recipe) => matchRecipes(recipe, ustenRecipe, regexSearch));
+                    resultUstensils.forEach((reUsten) => {
+                        if (recipe == reUsten) {
+                            resultSearch.push(listCardRecipes[index]);
+                        }
+                    });
+                });
             });
+        })
 
-        });
-     
         return { resultSearch, textSearchUser };
     }
     else {
         controlSearchBar();
+    }
+}
+
+function matchRecipes(recipe, nRecipe, regexSearch) {
+
+    if (nRecipe.match(regexSearch) !== null && nRecipe.match(regexSearch)[0].length > 2) {
+        // check if array of match is not null and 3 or more characters
+        return recipe;
     }
 }
 function createTag(value) {
@@ -483,10 +487,10 @@ function displayRecipes() {//display result search
     totRecipes.textContent = countRecipes + " recettes";
 
     //no recipe found 
-    if(countRecipes == 0){
+    if (countRecipes == 0) {
         noRecipeFound.style.display = "block";
     }
-    else{
+    else {
         noRecipeFound.style.display = "none";
     }
 
