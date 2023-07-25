@@ -2,7 +2,7 @@
 <html lang="fr">
 
 <head>
-  <link href="./css/style.css" rel="stylesheet" type="text/css" />
+  <link href="./css/style.css" rel="stylesheet" type="text/css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Les petits plats</title>
@@ -27,7 +27,7 @@
         <label for="search-recipe">Cherchez parmi plus de 1500 recettes du quotidien,simples et délicieuses</label>
         <div class="search-bar__input">
           <input type="search" id="search-recipe" class="control-text"
-            placeholder="Rechercher une recette, un ingrédient, ..." />
+            placeholder="Rechercher une recette, un ingrédient, ..." >
           <span class="search-bar__input__icon">
             <i class="fas fa-search"></i>
           </span>
@@ -35,8 +35,8 @@
       </div>
     </header>
     <main id="main">
-      <!-- section filter -->
-      <section id="section-filter">
+      <!-- header main -->
+      <header>
 
         <!-- filter tag -->
         <div class="recipes-filter">
@@ -47,7 +47,7 @@
               <i class="fa-solid fa-chevron-down"></i>
             </div>
             <div class="search-tag">
-              <input type="search" class="search-tag__input" />
+              <input type="search" class="search-tag__input">
               <span class="search-tag__icon">
                 <i class="fas fa-search"></i>
               </span>
@@ -61,7 +61,7 @@
               <i class="fa-solid fa-chevron-down"></i>
             </div>
             <div class="search-tag">
-              <input type="search" class="search-tag__input" />
+              <input type="search" class="search-tag__input">
               <span class="search-tag__icon">
                 <i class="fas fa-search"></i>
               </span>
@@ -75,7 +75,7 @@
               <i class="fa-solid fa-chevron-down"></i>
             </div>
             <div class="search-tag">
-              <input type="search" class="search-tag__input" />
+              <input type="search" class="search-tag__input">
               <span class="search-tag__icon">
                 <i class="fas fa-search"></i>
               </span>
@@ -89,14 +89,14 @@
 
         <div class="recipes-filter__tag">
         </div>
-      </section>
+      </header>
       <!-- section recipes -->
-      <section id="section">
+      <div id="section">
         <!-- list recipes -->
         <div class="container-recipes"></div>
         <!-- error message -->
         <span class="no-recipe-found">Aucune recette ne correspond à votre critère… Vous pouvez chercher « tarte aux pommes », « poisson », etc...</span>
-      </section>
+      </div>
     </main>
   </div>
   <script src="./data/recipes.js"></script>
